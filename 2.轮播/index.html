@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- 多张轮播 -->
+    <div class="container">
+        <div class="hsh-container"></div>
+    </div>
+    <!-- 单张轮播 -->
+
+    <script src="../jquery.min.js"></script>
+    <script src="index.js"></script>
+    <script>
+        $('.hsh-container').hshSlide({
+            data:[
+                '../images/git.png',
+                '../images/gulp.png',
+                '../images/node.png',
+                '../images/vue.png',
+                
+                '../images/npm.png',
+                '../images/webpack.png',
+                '../images/sass.png',
+               
+            ],
+            singleWidth:300,
+            singleHeight:150
+        })
+    </script>
+</body>
+</html>

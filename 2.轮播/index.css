@@ -1,0 +1,50 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+*{
+    touch-action: pan-y;
+}
+.container{
+    position: relative;
+    width: 100%;
+    height: 150px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.hsh-container{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height:150px;
+    white-space: nowrap;
+    display: inline-flex;
+    z-index: 100;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.hsh-arrow{
+    position:absolute;
+    top: 0;
+    width:30px;
+    height: 100%;
+    background: #000;
+    color: #fff;
+    line-height: 150px;
+    text-align: center;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.hsh-left-arrow{
+    left: 0;
+}
+.hsh-right-arrow{
+    right: 0;
+}
