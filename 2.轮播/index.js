@@ -77,7 +77,6 @@
                             })
                         }, 300);
                     }
-                    
                 })
                 $(document).on('touchstart','.hsh-container',function(event){
                     event.stopPropagation();
@@ -94,11 +93,6 @@
                     endY = event.originalEvent.targetTouches[0].pageY;
                     distance = endX - startX;
                     $el.css('left',left+distance+'px');
-                    // if(distance>0){//向右滑
-
-                    // }else if(distance<0){//向左滑
-
-                    // }
                 })
                 $(document).on('touchend','.hsh-container',function(event){
                     event.stopPropagation();

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script src="./lib/echarts-all.js"></script>
+    <script>
+        var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
+        var geoCoordMap = {
+                "北京": [116.46, 39.92],
+                "天津": [117.2, 39.13],
+                "上海": [121.48, 31.22],
+                '重庆': [107.7539, 30.1904],
+                '安徽': [117.27, 31.86],
+                '澳门': [113.5, 22.2],
+                '福建': [119.3, 26.08],
+                '甘肃': [103.73, 36.03],
+                '广东': [113.23, 23.16],
+                '广西': [108.479, 23.1152],
+                '贵州': [106.71, 26.57],
+                '海南': [110.35, 20.02],
+                '河北': [114.48, 38.03],
+                '黑龙江': [126.63, 45.75],
+                '河南': [113.65, 34.76],
+                '湖北': [114.31, 30.52],
+                '湖南': [113, 28.21],
+                '江苏': [118.78, 32.04],
+                '江西': [115.89, 28.68],
+                '吉林': [125.35, 43.88],
+                '辽宁': [123.38, 41.8],
+                '内蒙': [111.65, 40.82],
+                '宁夏': [106.27, 38.47],
+                '青海': [101.74, 36.56],
+                '山东': [120.33, 36.07],
+                '山西': [112.53, 37.87],
+                '陕西': [108.95, 34.27],
+                '四川': [104.06, 30.67],
+                '香港': [114.1, 22.2],
+                '新疆': [87.68, 43.77],
+                '西藏': [91.11, 29.97],
+                '云南': [102.73, 25.04],
+                '浙江': [120.19, 30.26],
+            };
+        var travelOption = {
+            backgroundColor: 'rgb(18, 39, 55)',
+            color: ['gold', 'aqua', 'lime'],
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}'
+            },
+            // dataRange: {
+            //     show: false,
+            //     splitList: [
+            //         {
+            //             start: 1,
+            //             end: 30,
+            //             label: '1 - 30',
+            //             color: 'aqua'
+            //         },
+            //         {
+            //             start: 31,
+            //             end: 60,
+            //             label: '31 to 60',
+            //             color: 'orange'
+            //         },
+            //         {
+            //             start: 61,
+            //             label: '> 61',
+            //             color: '#ff3333'
+            //         }
+            //     ],
+            //     //color: ['#ff3333', 'orange','aqua'],//'yellow',,'lime'
+            //     textStyle: {
+            //         color: '#fff',
+            //         display: 'none',
+            //     }
+            // },
+            series: [
+                {
+                    name: '全国',
+                    type: 'map',
+                    roam: true,//只支持缩放
+                    hoverable: false,
+                    mapType: 'china',
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true,
+                                textStyle: {
+                                    color: "rgb(249, 249, 249)",
+                                    fontSize: '14'
+                                }
+                            },
+                            borderColor: 'rgba(45, 132, 149,0.3)',
+                            borderWidth: 2,
+                            areaStyle: {
+                                // color: 'rgba(255,255,255,0)',
+                                color: 'rgb(18, 39, 55)'
+                            }
+                        }
+                    },
+                    data: [],
+                    // markLine: {
+                    //     smooth: true,
+                    //     // symbol: ['none', 'circle'],
+                    //     // symbolSize: 1,
+                    //     itemStyle: {
+                    //         normal: {
+                    //             color: '#fff',
+                    //             borderWidth: 1,
+                    //             borderColor: 'rgba(30,144,255,0.5)'
+                    //         }
+                    //     },
+                    //     data: []
+                    // },
+                    geoCoord:geoCoordMap,
+                    mtControl: {
+                        'CSG': false,
+                    }
+                },
+                {
+                    name: '上海重点人迁徙',
+                    type: 'map',
+                    mapType: 'china',
+                    data: [],
+                    markLine: {
+                        smooth: true,
+                        period: 100,
+                        // symbol: ['arrow'],
+                        symbolSize: 10,
+                        effect: {
+                            show: true,
+                            period: 10,
+                            scaleSize: 1,
+                            symbol:['arrow']
+                        },
+                        itemStyle: {
+                            normal: {
+                                borderWidth: 1,
+                                color:function(params){
+                                        if(params.data[0].name == '新疆' || params.data[1].name == '新疆'){
+                                            return 'red'
+                                        }else{
+                                            return 'rgb(12,187,239)'
+                                        }
+                                    },
+                                lineStyle: {
+                                    type: 'solid',
+                                    shadowBlur: 10,
+                                },
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    position: 'top',
+                                    formatter: function (data) {
+                                        var res = data.name.replace(':', '-') + '(' + data.value + ')';
+                                        return res;
+                                    },
+                                    textStyle: {
+                                        fontSize: '20',
+                                    }
+                                }
+                            }
+                        },
+                        data: []
+                    },
+                    markPoint: {
+                        symbol: 'emptyCircle',
+                        symbolSize: function (v) {
+                            return 10 + v / 10
+                        },
+                        effect: {
+                            show: true,
+                            shadowBlur: 0
+                        },
+                        itemStyle: {
+                            normal: {
+                                color:function(params){
+                                        if(params.data.name == '新疆'){
+                                            return 'red'
+                                        }else{
+                                            return 'rgb(12,187,239)'
+                                        }
+                                    },
+                                label: { 
+                                    show: true,
+                                 }
+                            },
+                            emphasis: {
+                                label: {
+                                    position: 'top',
+                                }
+                            }
+                        },
+                        data: []
+                    }
+                },
+            ]
+        };
+        objTravel([
+            // {FROM_CITY_DESC:'上海',COUNT:100,TO_CITY_DESC:'新疆'},
+            // {FROM_CITY_DESC:'上海',COUNT:20,TO_CITY_DESC:'北京'},
+            // {FROM_CITY_DESC:'上海',COUNT:20,TO_CITY_DESC:'广东'},
+            {FROM_CITY_DESC:'新疆',COUNT:100,TO_CITY_DESC:'上海'},
+            {FROM_CITY_DESC:'广东',COUNT:20,TO_CITY_DESC:'上海'},
+            {FROM_CITY_DESC:'北京',COUNT:20,TO_CITY_DESC:'上海'},
+        ])
+        function objTravel(data) {
+            var myChart = echarts.init(document.getElementById('map'));
+            var ecConfig = echarts.config;
+            var dataMarkLine = [];
+            var dataMarkPoint = [];
+            for (var i = 0; i < data.length; i++) {
+                dataMarkLine.push([{ name: data[i].FROM_CITY_DESC,value:data[i].COUNT }, { name: data[i].TO_CITY_DESC, value: data[i].COUNT }]);
+                dataMarkPoint.push({ name: data[i].TO_CITY_DESC, value: data[i].COUNT },{name: data[i].FROM_CITY_DESC, value: data[i].COUNT});
+            }
+            travelOption.series[1].markLine.data = dataMarkLine;
+            travelOption.series[1].markPoint.data = dataMarkPoint;
+            //迁徙线点击弹出详情
+            myChart.setOption(travelOption);
+        }
+    </script>
+</body>
+
+</html>
